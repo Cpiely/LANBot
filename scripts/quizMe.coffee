@@ -187,12 +187,18 @@ class quizMe
 		@save
 
 	removeMember: (msg) ->
+		cmd = msg.match[1].split(" ")
+		user = cmd[1] + " " + cmd[2]
 		delete @storage.members[user]
 
 	removeTaker: (msg) ->
+		cmd = msg.match[1].split(" ")
+		user = cmd[1] + " " + cmd[2]
 		delete @storage.quizTakers[user]
 
 	removeClass: (msg) ->
+		cmd = msg.match[1].split(" ")
+		user = cmd[1] + " " + cmd[2]
 		delete @storage.classes[user]
 	
 	clearMembers: (msg) ->
@@ -261,12 +267,12 @@ module.exports = (robot) ->
 	quizMe = new quizMe(robot)
 
 	checkMessage = (msg, cmd) ->
-		if quizMe .validChannel msg.message.user.room
+		if quizMe.validChannel msg.message.user.room
 			cmd msg
 		else msg.send "You must be in a valid channel to use this command"
 
 	checkRestrictedMessage = (msg, cmd) ->
-		if quizMe .checkPermission msg
+		if quizMe.checkPermission msg
 			checkMessage(msg, cmd)
 
 	robot.hear /^\s*quizMe\s*$/i, (msg) ->
